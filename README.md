@@ -29,6 +29,8 @@ bash install.sh
 
 Elige **Brother DCP-T226 USB Bridge** en `⌘ + P`. No selecciona automáticamente una impresora predeterminada ni modifica otras colas. El servicio se inicia al entrar en la sesión.
 
+El panel de estado de solo lectura está en **http://127.0.0.1:45829/**. Muestra Docker, el servicio, la detección USB y la cola. Escucha únicamente en este Mac y no permite modificar la configuración ni reenviar trabajos. El estado USB indica que se detecta el modelo, no garantiza que haya impreso una página.
+
 ## Diagnóstico
 
 ```bash
@@ -45,6 +47,8 @@ Esto elimina únicamente la cola, el servicio y los archivos creados por este pr
 
 ```bash
 lpadmin -x Brother_T226_Bridge
+launchctl bootout "gui/$(id -u)" "$HOME/Library/LaunchAgents/local.brother-t226-dashboard.plist"
+rm "$HOME/Library/LaunchAgents/local.brother-t226-dashboard.plist"
 launchctl bootout "gui/$(id -u)" "$HOME/Library/LaunchAgents/local.brother-t226-macos-bridge.plist"
 rm "$HOME/Library/LaunchAgents/local.brother-t226-macos-bridge.plist"
 rm -r "$HOME/Library/Application Support/Brother-T226-Bridge"
